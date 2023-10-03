@@ -1,17 +1,18 @@
 const { sqlForPartialUpdate } = require("./sql");
 
 describe("sqlForPartialUpdate", function () {
-    test("works: no jsToSql", function () {
-        const result = sqlForPartialUpdate({
-            email: "email@email.com"
-        });
+    test("works: 1 ", function () {
+        const result = sqlForPartialUpdate(
+            { firstName: "Test1" },
+            { firstName: "first_name", lastName: "last_name" }
+        );
         expect(result).toEqual({
-            setCols: "\"email\"=$1",
-            values: ["email@email.com"]
+            setCols: "\"first_name\"=$1",
+            values: ["Test1"]
         });
     });
 
-    test("works: jsToSql", function () {
+    test("works: with 2 entry", function () {
         const result = sqlForPartialUpdate({
             firstName: "Test1", lastName: "Testing1"
         },
