@@ -67,7 +67,7 @@ router.get("/", async function (req, res, next) {
       throw new BadRequestError(errs);
     }
 
-    const companies = await Company.findAll();
+    const companies = await Company.findAll(q);
     return res.json({ companies });
 
   } catch (err) {

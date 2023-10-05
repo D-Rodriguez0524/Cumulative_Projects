@@ -6,7 +6,7 @@ const { sqlForPartialUpdate } = require("../helpers/sql");
 
 /** Related functions for companies. */
 
-class job {
+class Job {
     /** Create a job (from data), update db, return new job data.
      *
      * data should be { tile,salary,equity,companyHandle }
@@ -176,4 +176,4 @@ class job {
 }
 
 
-module.exports = job;
+module.exports = Job;
