@@ -40,7 +40,8 @@ router.post("/",
       const user = await User.register(req.body);
       const token = createToken(user);
       return res.status(201).json({ user, token });
-    } catch (err) {
+    }
+    catch (err) {
       return next(err);
     }
   });
@@ -111,6 +112,25 @@ router.patch("/:username",
     }
   });
 
+/** POST /[username]/jobs/[id]  { state } => { application }
+*
+* Returns {"applied": jobId}
+*
+* Authorization required: admin or same-user-as-:username
+* */
+
+router.post("/:username/jobs/:id",
+  ensureCorrectUserOrAdmin,
+  async (req, res, next) => {
+    try {
+      const jobId = +req.params.id;
+      await User.application(req.params.username, jobId);
+      return res.json({ applied: jobId });
+    }
+    catch (err) {
+      return next(err);
+    }
+  });
 
 /** DELETE /[username]  =>  { deleted: username }
  *
@@ -123,10 +143,10 @@ router.delete("/:username",
     try {
       await User.remove(req.params.username);
       return res.json({ deleted: req.params.username });
-    } catch (err) {
+    }
+    catch (err) {
       return next(err);
     }
   });
-
 
 module.exports = router;
